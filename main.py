@@ -227,7 +227,6 @@ while True:
                     cx, cy = int(lm.x * w), int(lm.y * h)
                     if id in [4, 8]:
                         pts_portal.append([cx, cy])
-                        cv2.circle(img, (cx, cy), 8, (255, 255, 0), cv2.FILLED)
 
             # 4 POIN -> PORTAL MIRING (Polygon)
             if len(pts_portal) == 4:
@@ -256,25 +255,14 @@ while True:
                     
                     cv2.polylines(img, [poly_pts], True, (255, 255, 255), 2)
                     
-                    # --- PARTIKEL GLOW DI TEPI PORTAL ---
-                    for i in range(4):
-                        pt1 = poly_pts[i]
-                        pt2 = poly_pts[(i+1)%4]
-                        for _ in range(5):
-                            alpha = np.random.random()
-                            px = int(pt1[0] * alpha + pt2[0] * (1 - alpha)) + np.random.randint(-15, 15)
-                            py = int(pt1[1] * alpha + pt2[1] * (1 - alpha)) + np.random.randint(-15, 15)
-                            cv2.circle(img, (px, py), np.random.randint(1, 4), (0, 255, 255), -1)
+                    # Partikel glow dihilangkan
     
-                    cv2.putText(img, f"PORTAL: {filter_name}", (top_pts[0][0], top_pts[0][1] - 10), 
-                                cv2.FONT_HERSHEY_PLAIN, 1.5, (255, 255, 255), 2)
+
 
     if full_screen_mode:
         img = apply_filter(img, filter_name, 0, 0, mask_person, frame_galaxy)
 
-    # Overlay Teks
-    cv2.putText(img, "Ganti Filter: Cubit dengan 2 Tangan", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
-    cv2.putText(img, f"Filter Aktif: {filters[current_filter]}", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 255), 2)
+    # Overlay Teks Dihilangkan
 
     cv2.imshow('RETROLENS Pake Python', img)
     
